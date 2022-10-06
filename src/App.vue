@@ -1,26 +1,55 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app">
+    <Header :value="usname" v-if='this.$route.meta.isShowHeader'/>
+    <router-view></router-view>
+    <Footer v-if='this.$route.meta.isShowHeader'/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header,
+    Footer,
+
+  },
+  data() {
+    return {
+      usname: String
+    }
+  },
+  mounted() {
+    document.querySelector('body').setAttribute('style', 'background-color:#3C3C3C')
+  },
+  methods: {
+    login() {
+      let getFlag = localStorage.getItem("Flag");
+      let getName = localStorage.getItem("Uname");
+      if(getFlag === "isLogin"){
+        this.usname = getName + " logout";
+      }
+      else {
+        this.usname = "Log in"
+      }
+    }
+  },
+  watch: {
+    '$route' () {
+      this.login();
+    }
   }
 }
 </script>
-
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
