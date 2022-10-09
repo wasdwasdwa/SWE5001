@@ -7,6 +7,8 @@ import Createorder from "@/view/Createorder";
 import Ordercreated from "@/view/Ordercreated";
 import Paysuccess from "@/view/Paysuccess";
 import Orderfail from "@/view/Orderfail";
+import Purchasehistory from "@/view/Purchasehistory";
+import Purchasedetail from "@/view/Purchasedetail";
 
 const routes = [
     {
@@ -84,6 +86,26 @@ const routes = [
         path: '/orderfail',
         name: 'Orderfail',
         component: Orderfail,
+        meta: {
+            isLogin: true,
+            isShowHeader: true,
+            isShowFooter: true
+        }
+    },
+    {
+        path: '/purchasehistory',
+        name: 'Purchasehistory',
+        component: Purchasehistory,
+        meta: {
+            isLogin: true,
+            isShowHeader: true,
+            isShowFooter: true
+        }
+    },
+    {
+        path: '/purchasedetail',
+        name: 'Purchasedetail',
+        component: Purchasedetail,
         meta: {
             isLogin: true,
             isShowHeader: true,

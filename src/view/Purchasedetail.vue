@@ -18,42 +18,19 @@
 
       <div class="edetail">
         <div class="etime">
-          <h3>Schedule</h3>
+          <h3>Purchase Detail</h3>
         </div>
         <div class="edes2">
-          <p>Description</p>
+          <p>Order ID:<br>Order time:<br>Number of Tickets:<br>Payment ID:<br>Total Price:</p>
         </div>
         <div class="dheader1">
         </div>
 
         <div class="tprice">
-          <h3>Ticket Type & Price</h3>
+          <h3>Delivery Information</h3>
         </div>
         <div class="edes3">
-          <p>Description</p>
-        </div>
-        <div class="dheader2">
-        </div>
-
-        <div class="contact">
-          <h3>Contact</h3>
-        </div>
-        <div class="edes4">
-          <p>Description</p>
-        </div>
-      </div>
-
-      <div class="ticket">
-        <div class="theader">
-          <div class="ttitle">
-            <h2>Tickets</h2>
-          </div>
-        </div>
-        <div class="remain">
-          <h3>Tickets Available:</h3>
-        </div>
-        <div class="butt">
-          <el-button type="primary" @click="more" plain>Buy Tickets</el-button>
+          <p>Address:<br>Phone Number:</p>
         </div>
       </div>
 
@@ -81,7 +58,7 @@ export default {
 }
 .eventlist{
   width:100%;
-  height:1100px;
+  height:670px;
   vertical-align: middle;
   background-color: #E9E9E9;
   text-align: center;
@@ -93,7 +70,7 @@ export default {
   position: absolute;
   margin-top: 90px;
   width:630px;
-  height:780px;
+  height:550px;
   background: white;
 }
 .edetail{
@@ -101,60 +78,16 @@ export default {
   position: absolute;
   margin-top: 90px;
   width:650px;
-  height:780px;
+  height:550px;
   background: white;
 }
-.ticket{
-  margin-left: 150px;
-  position: absolute;
-  margin-top: 892px;
-  width:1300px;
-  height:180px;
-  background: white;
-}
-.butt {
-  /*position: absolute;*/
-  vertical-align: middle;
-  margin-left: 1150px;
-  margin-top: 130px;
-  text-align: center;
-}
-.el-button {
-  background-color: #AF473C;
-  color: white;
-  width:100px;
-}
-.theader{
-  position: absolute;
-  width:1300px;
-  height:48px;
-  background: #565656;
-}
+
 .dheader1{
   position: absolute;
   margin-top: 330px;
   width:650px;
   height:5px;
   background: #565656;
-}
-.dheader2{
-  position: absolute;
-  margin-top: 580px;
-  width:650px;
-  height:5px;
-  background: #565656;
-}
-.remain{
-  position: absolute;
-  margin-left: 45px;
-  margin-top: 100px;
-}
-.ttitle{
-  position:absolute;
-  margin-left: 25px;
-  margin-top: 8px;
-  font-size: 15px;
-  color: white;
 }
 .poster{
   position: absolute;
@@ -183,11 +116,6 @@ export default {
   margin-left: 25px;
   margin-top: 350px;
 }
-.contact{
-  position: absolute;
-  margin-left: 25px;
-  margin-top: 600px;
-}
 .edes1{
   position: absolute;
   margin-left: 45px;
@@ -195,18 +123,15 @@ export default {
 }
 .edes2{
   position: absolute;
+  text-align: left;
   margin-left: 45px;
   margin-top: 70px;
 }
 .edes3{
   position: absolute;
+  text-align: left;
   margin-left: 45px;
   margin-top: 400px;
-}
-.edes4{
-  position: absolute;
-  margin-left: 45px;
-  margin-top: 650px;
 }
 
 .empty{
