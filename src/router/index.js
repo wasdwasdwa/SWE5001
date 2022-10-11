@@ -9,6 +9,7 @@ import Paysuccess from "@/view/Paysuccess";
 import Orderfail from "@/view/Orderfail";
 import Purchasehistory from "@/view/Purchasehistory";
 import Purchasedetail from "@/view/Purchasedetail";
+import Fillorder from "@/view/Fillorder";
 
 const routes = [
     {
@@ -112,7 +113,16 @@ const routes = [
             isShowFooter: true
         }
     },
-
+    {
+        path: '/fillorder',
+        name: 'Fillorder',
+        component: Fillorder,
+        meta: {
+            isLogin: true,
+            isShowHeader: true,
+            isShowFooter: true
+        }
+    },
 ];
 
 const router = createRouter({
