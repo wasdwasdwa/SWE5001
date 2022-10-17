@@ -42,14 +42,21 @@
 export default {
     data() {
       return {
-        search: "", //当前输入框的值
-        isFocus: false, //是否聚焦
-        hotSearchList: ["暂无热门搜索"], //热门搜索数据
-        historySearchList: [], //历史搜索数据
-        searchList: ["暂无数据"], //搜索返回数据,
-        history: false,
-        types: ["", "success", "info", "warning", "danger"] //搜索历史tag式样
-      };
+        id: "",
+        title: "",
+        summary: "",
+        imageUrl: "",
+        htmlContent: "",
+        eventStartTime: "",
+        eventEndTime: "",
+        venue: "",
+        nation: "",
+        tag: "",
+        status: "",
+        createTime: "",
+        providerId: ""
+
+      }
     },
     methods: {
       focus() {

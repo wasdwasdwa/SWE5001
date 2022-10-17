@@ -39,13 +39,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Ordercreated",
 
   data () {
-    return {}
+    return {
+      Items:{
+        id: "",
+        title: "",
+        summary: "",
+        imageUrl: "",
+        htmlContent: "",
+        eventStartTime: "",
+        eventEndTime: "",
+        venue: "",
+        nation: "",
+        tag: "",
+        status: "",
+        createTime: "",
+        providerId: ""
+      }
+    }
+  },
+  mounted() {
+    if (!this.loaded) {
+      this.getItems();
+    }
   },
   methods: {
+
     confirm () {
       this.$router.push('/paysuccess')
     }

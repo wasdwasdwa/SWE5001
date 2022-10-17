@@ -2,7 +2,7 @@
   <div class="body">
     <div class="eventlist">
       <div class="etitle">
-        <h2>Title</h2>
+        <h2>{{ Items.title }}</h2>
       </div>
       <div class="event">
         <div class="poster">
@@ -11,7 +11,10 @@
           <h3>Event Details</h3>
         </div>
         <div class="edes1">
-          <p>Description</p>
+          <p>{{ Items.tag }}</p>
+          <p>{{ Items.summary }}</p>
+          <p>{{ Items.venue }} , {{ Items.nation }}</p>
+
         </div>
       </div>
 
@@ -21,7 +24,7 @@
           <h3>Schedule</h3>
         </div>
         <div class="edes2">
-          <p>Description</p>
+          <p>From {{ Items.eventStartTime }} to {{ Items.eventEndTime }}</p>
         </div>
         <div class="dheader1">
         </div>
@@ -30,7 +33,7 @@
           <h3>Ticket Type & Price</h3>
         </div>
         <div class="edes3">
-          <p>Description</p>
+          <p>{{ Items.ticketTitle }} : {{ Items.ticketPrice }}</p>
         </div>
         <div class="dheader2">
         </div>
@@ -65,8 +68,59 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Purchasehistory"
+  name: "Purchasehistory",
+
+  data () {
+    return {
+      Items:{
+        id: "",
+        title: "",
+        summary: "",
+        imageUrl: "",
+        htmlContent: "",
+        eventStartTime: "",
+        eventEndTime: "",
+        venue: "",
+        nation: "",
+        tag: "",
+        status: "",
+        createTime: "",
+        providerId: "",
+        ticketTitle:"",
+        amount:""
+      }
+    }
+  },
+  mounted() {
+    if (!this.loaded) {
+      this.getItems();
+    }
+  },
+  methods:{
+    getItems() {
+      axios.get('52.45.86.178:6001/ticket/api/events/' + "1244940138650423298").then((resp) => {
+        this.Items.title = resp.data.data.title;
+        this.Items.summary = resp.data.data.summary;
+        this.Items.htmlContent = resp.data.data.htmlContent;
+        this.Items.eventStartTime = resp.data.data.eventStartTime;
+        this.Items.eventEndTime = resp.data.data.eventEndTime;
+        this.Items.venue = resp.data.data.venue;
+        this.Items.nation = resp.data.data.nation;
+        this.Items.tag = resp.data.data.tag;
+        this.Items.status = resp.data.data.status;
+        this.Items.tag = resp.data.data.tag;
+        // this.Items.ticketTitle = resp.data.ticketList.title;
+        // this.Items.amount = resp.data.ticketList.amount;
+        this.loaded = true;
+      }).catch((err) => {
+        console.log(err);
+      })
+    },
+  }
+
 }
 </script>
 

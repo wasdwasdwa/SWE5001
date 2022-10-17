@@ -3,7 +3,6 @@ import Home from '../view/Home'
 import Login from '../view/Login'
 import Register from "@/view/Register";
 import Info from "@/view/Info";
-import Createorder from "@/view/Createorder";
 import Ordercreated from "@/view/Ordercreated";
 import Paysuccess from "@/view/Paysuccess";
 import Orderfail from "@/view/Orderfail";
@@ -53,16 +52,7 @@ const routes = [
             isShowFooter: true
         }
     },
-    {
-        path: '/createorder',
-        name: 'Createorder',
-        component: Createorder,
-        meta: {
-            isLogin: true,
-            isShowHeader: true,
-            isShowFooter: true
-        }
-    },
+
     {
         path: '/ordercreated',
         name: 'Ordercreated',

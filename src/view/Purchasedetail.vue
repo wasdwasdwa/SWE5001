@@ -42,8 +42,56 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Purchasehistory"
+  name: "Purchasehistory",
+  data(){
+    return{
+      Detail:{
+        id: "",
+        ticketId: "",
+        ticketCount: "",
+        eventId: "",
+        customerId: "",
+        totalPrice: "",
+        status: "",
+        createTime: "",
+        payExpireTime: "",
+        payTime: "",
+        // "paymentLink": "/order/mock-payment/8d744f630bc0495faab516410b5bc5a8",
+        paymentId: "",
+        deliveryEmail: "",
+        deliveryAddress: "",
+        phone: ""
+      }
+    }
+  },
+  mounted() {
+    if (!this.loaded) {
+      this.getDetail();
+    }
+  },
+  methods:{
+    getDetail() {
+      axios.get('52.45.86.178:6001/order/orders/' + "1579015256632487937").then((resp) => {
+        this.Detail.ticketId = resp.data.data.ticketId;
+        this.Detail.ticketCount = resp.data.data.ticketCount;
+        this.Detail.htmlContent = resp.data.data.htmlContent;
+        this.Detail.eventStartTime = resp.data.data.eventStartTime;
+        this.Detail.eventEndTime = resp.data.data.eventEndTime;
+        this.Detail.venue = resp.data.data.venue;
+        this.Detail.nation = resp.data.data.nation;
+        this.Detail.tag = resp.data.data.tag;
+        this.Detail.status = resp.data.data.status;
+        this.Detail.tag = resp.data.data.tag;
+
+        this.loaded = true;
+      }).catch((err) => {
+        console.log(err);
+      })
+    },
+  }
 }
 </script>
 
