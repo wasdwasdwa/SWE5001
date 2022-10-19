@@ -2,7 +2,7 @@
   <div class="body">
     <div class="eventlist">
       <div class="etitle">
-        <h2>Title</h2>
+        <h2>{{ Detail.title }}</h2>
       </div>
       <div class="event">
         <div class="poster">
@@ -21,7 +21,11 @@
           <h3>Purchase Detail</h3>
         </div>
         <div class="edes2">
-          <p>Order ID:<br>Order time:<br>Number of Tickets:<br>Payment ID:<br>Total Price:</p>
+          <p><br>Ticket count: {{ Detail.ticketCount }}<br>
+            Total price: {{ Detail.totalPrice }}<br> Payment ID: {{ Detail.paymentId }}<br>
+            Create time: {{Detail.createTime}}<br>Payment expire time: {{ Detail.payExpireTime}}<br>
+            Pay time: {{Detail.payTime}}<br>Payment link: {{Detail.paymentLink}}
+          </p>
         </div>
         <div class="dheader1">
         </div>
@@ -30,7 +34,9 @@
           <h3>Delivery Information</h3>
         </div>
         <div class="edes3">
-          <p>Address:<br>Phone Number:</p>
+          <p>Address: {{Detail.deliveryAddress}}<br>Phone Number: {{Detail.phone}}
+            <br>Email: {{Detail.deliveryEmail}}
+          </p>
         </div>
       </div>
 
@@ -52,14 +58,14 @@ export default {
         id: "",
         ticketId: "",
         ticketCount: "",
-        eventId: "",
+        eventId: "", //need event title
         customerId: "",
         totalPrice: "",
         status: "",
         createTime: "",
         payExpireTime: "",
         payTime: "",
-        // "paymentLink": "/order/mock-payment/8d744f630bc0495faab516410b5bc5a8",
+        paymentLink: "",
         paymentId: "",
         deliveryEmail: "",
         deliveryAddress: "",
@@ -74,17 +80,19 @@ export default {
   },
   methods:{
     getDetail() {
-      axios.get('52.45.86.178:6001/order/orders/' + "1579015256632487937").then((resp) => {
+      axios.get('http://52.45.86.178:6001/order/orders/' + "1579015256632487937").then((resp) => {
         this.Detail.ticketId = resp.data.data.ticketId;
         this.Detail.ticketCount = resp.data.data.ticketCount;
-        this.Detail.htmlContent = resp.data.data.htmlContent;
-        this.Detail.eventStartTime = resp.data.data.eventStartTime;
-        this.Detail.eventEndTime = resp.data.data.eventEndTime;
-        this.Detail.venue = resp.data.data.venue;
-        this.Detail.nation = resp.data.data.nation;
-        this.Detail.tag = resp.data.data.tag;
-        this.Detail.status = resp.data.data.status;
-        this.Detail.tag = resp.data.data.tag;
+        this.Detail.eventId = resp.data.data.eventId;
+        this.Detail.totalPrice = resp.data.data.totalPrice;
+        this.Detail.createTime = resp.data.data.createTime;
+        this.Detail.payExpireTime = resp.data.data.payExpireTime;
+        this.Detail.payTime = resp.data.data.payTime;
+        this.Detail.paymentLink = resp.data.data.paymentLink;
+        this.Detail.paymentId = resp.data.data.paymentId;
+        this.Detail.deliveryEmail = resp.data.data.deliveryEmail;
+        this.Detail.deliveryAddress = resp.data.data.deliveryAddress;
+        this.Detail.phone = resp.data.data.phone;
 
         this.loaded = true;
       }).catch((err) => {

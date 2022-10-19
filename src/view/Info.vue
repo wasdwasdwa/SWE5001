@@ -1,4 +1,5 @@
 <template>
+
   <div class="body">
     <div class="eventlist">
       <div class="etitle">
@@ -101,17 +102,17 @@ export default {
   },
   methods:{
     getItems() {
-      axios.get('52.45.86.178:6001/ticket/api/events/' + "1244940138650423298").then((resp) => {
-        this.Items.title = resp.data.data.title;
-        this.Items.summary = resp.data.data.summary;
-        this.Items.htmlContent = resp.data.data.htmlContent;
-        this.Items.eventStartTime = resp.data.data.eventStartTime;
-        this.Items.eventEndTime = resp.data.data.eventEndTime;
-        this.Items.venue = resp.data.data.venue;
-        this.Items.nation = resp.data.data.nation;
-        this.Items.tag = resp.data.data.tag;
-        this.Items.status = resp.data.data.status;
-        this.Items.tag = resp.data.data.tag;
+      axios.get('http://52.45.86.178:6001/ticket/api/events/' + "1244940138650423298").then((resp) => {
+        this.Items.title = resp.data.data.event.title;
+        this.Items.summary = resp.data.data.event.summary;
+        this.Items.htmlContent = resp.data.data.event.htmlContent;
+        this.Items.eventStartTime = resp.data.data.event.eventStartTime;
+        this.Items.eventEndTime = resp.data.data.event.eventEndTime;
+        this.Items.venue = resp.data.data.event.venue;
+        this.Items.nation = resp.data.data.event.nation;
+        this.Items.tag = resp.data.data.event.tag;
+        this.Items.status = resp.data.data.event.status;
+        this.Items.tag = resp.data.data.event.tag;
         // this.Items.ticketTitle = resp.data.ticketList.title;
         // this.Items.amount = resp.data.ticketList.amount;
         this.loaded = true;

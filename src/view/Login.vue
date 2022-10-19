@@ -36,14 +36,15 @@
 // import { login } from "@/api/login";
 // import { setToken } from "@/request/auth";
 import { mapMutations } from 'vuex';
+import axios from "axios";
 
 export default {
   name: "Login",
   data() {
     return {
       form: {
-        password: "",
         username: "",
+        password: "",
       },
       checked: false,
       rules: {
@@ -58,48 +59,39 @@ export default {
       },
     };
   },
-  mounted() {
-    if(localStorage.getItem("news")){
-      this.form=JSON.parse(localStorage.getItem("news"))
-      this.checked=true
-    }
-  },
   methods: {
-    login(form) {
-      this.$refs[form].validate((valid) => {
-        if (valid) {
-          login(this.form)
-              .then((res) => {
-                if (res.code === 200) {
-                  setToken(res.data.token);
-                  localStorage.setItem("USERNAME", res.data.username);
-                  this.$message({
-                    message: "login successfully",
-                    type: "success",
-                    showClose: true,
-                  });
-                  this.$router.replace("/");
-                } else {
-                  this.$message({
-                    message: "Wrong username or password",
-                    type: "error",
-                    showClose: true,
-                  });
-                }
-              })
-              .catch((err) => {
-                this.$message({
-                  message: "账户名或密码错误",
-                  type: "error",
-                  showClose: true,
-                });
-              });
-        } else {
-          return false;
-        }
-      });
-   },
-    remenber(data){
+    login () {
+      if (this.form.username === '' || this.form.password === '') {
+        alert('Username and password should not be empty');
+      } else {
+        const newFormData = new FormData();
+        newFormData.append('username', this.form.username)
+        newFormData.append('password', this.form.password)
+        axios({
+          method: 'post',
+          url: 'http://52.45.86.178:6001/auth/login',
+          auth: {
+            username: 'livecat-admin',
+            password: 'leopanda',
+          },
+          data: newFormData
+        }).then(res => {
+          console.log(res.data);
+          let userToken;
+          userToken = 'Bearer ' + res.data.data.access_token;
+          // 将用户token保存到vuex中
+          localStorage.setItem('userName',this.form.username);
+          localStorage.setItem('access_token',userToken);
+          this.$router.push('/');
+          alert('Log in successfully');
+        }).catch(error => {
+          alert('Wrong username or password');
+          console.log(error);
+        });
+      }
+    },
+
+    remember(data){
       this.checked=data
       if(this.checked){
         localStorage.setItem("news",JSON.stringify(this.form))
