@@ -13,17 +13,18 @@
             <el-input v-model="form.password" clearable placeholder="Password" show-password></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="form.password" clearable placeholder="Repeat password" show-password></el-input>
+            <el-input v-model="form.repPassword" clearable placeholder="Repeat password" show-password></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="form.nickName" clearable placeholder="Nickname"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="form.mobile" clearable placeholder="Phone number"></el-input>
           </el-form-item>
           <el-form-item prop="email">
             <el-input v-model="form.email" clearable placeholder="Email"></el-input>
           </el-form-item>
         </el-form>
-      </div>
-      <div class="tool">
-        <div class="button">
-          <el-checkbox v-model="checked" @change="remember">Remember me</el-checkbox>
-        </div>
       </div>
       <div class="butt">
         <el-button type="primary" @click="login" plain>Register</el-button>
@@ -36,13 +37,18 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Register",
   data() {
     return {
       form: {
-        password: "",
         username: "",
+        password: "",
+        repPassword: "",
+        nickName: "",
+        mobile:"",
         email: "",
       },
       checked: false,
@@ -55,6 +61,18 @@ export default {
           {required: true, message: "Please enter password", trigger: "blur"},
           // { max: 10, message: "不能大于10个字符", trigger: "blur" },
         ],
+        repPassword: [
+          {required: true, message: "Please repeat password", trigger: "blur"},
+          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
+        nickName: [
+          {required: true, message: "Please enter nickname", trigger: "blur"},
+          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
+        mobile: [
+          {required: true, message: "Please enter phone number", trigger: "blur"},
+          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
         email: [
           {required: true, message: "Please enter email", trigger: "blur"},
           // { max: 10, message: "不能大于10个字符", trigger: "blur" },
@@ -62,12 +80,37 @@ export default {
       },
     };
   },
-  mounted() {
-    if (localStorage.getItem("news")) {
-      this.form = JSON.parse(localStorage.getItem("news"))
-      this.checked = true
-    }
+  methods: {
+    login () {
+      if (this.form.username === '' || this.form.password === '' || this.form.repassword === '') {
+        alert('Username and password should not be empty');
+      } else {
+        axios({
+          method: 'post',
+          url: 'http://52.45.86.178:6001/system/api/user/register',
+          auth: {
+            username: 'livecat-admin',
+            password: 'leopanda',
+          },
+          data: this.form
+        }).then(res => {
+          console.log(res.data);
+          if (res.data.code === 20000) {
+            this.$router.push('/login');
+            alert('Register successfully, please login');
+          }
+          else{
+            alert('Error');
+          }
+
+        }).catch(error => {
+          alert('Error');
+          console.log(error);
+        });
+      }
+    },
   },
+
 };
 </script>
 
@@ -101,13 +144,6 @@ export default {
   height: 300px;
   transform: translate(-50%);
   margin-left: 50%;
-}
-
-.tool {
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  color: white;
 }
 
 .butt {
