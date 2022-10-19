@@ -44,7 +44,7 @@ const routes = [
         }
     },
     {
-        path: '/info',
+        path: '/info/:eventid',
         name: 'Info',
         component: Info,
         meta: {

@@ -6,8 +6,7 @@
       </div>
       <div class="header-links">
         <el-link href="/" class="header-link" :underline="false">Home</el-link>
-        <el-link href="/active" class="header-link" :underline="false">Activities</el-link>
-        <el-link href="/leaving" class="header-link" :underline="false">ContactUs</el-link>
+        <el-link href="/active" class="header-link" :underline="false">Events</el-link>
       </div>
 
       <el-link v-if="!isLogin" href="/login" style="float: right;padding-top: 23px;padding-right: 50px"

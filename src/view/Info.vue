@@ -2,9 +2,12 @@
 
   <div class="body">
     <div class="eventlist">
+
       <div class="etitle">
         <h2>{{ Items.title }}</h2>
       </div>
+      <div class="layout">
+        <div class="leftpart">
       <div class="event">
         <div class="poster">
         </div>
@@ -12,39 +15,28 @@
           <h3>Event Details</h3>
         </div>
         <div class="edes1">
-          <p>{{ Items.tag }}</p>
-          <p>{{ Items.summary }}</p>
-          <p>{{ Items.venue }} , {{ Items.nation }}</p>
-
+          <p>Type: {{ Items.tag }}</p>
+          <p>Event place: {{ Items.venue }} , {{ Items.nation }}</p>
+          <p>From {{ Items.eventStartTime.substring(0,16) }} to {{ Items.eventEndTime.substring(0,16) }}</p>
+          <p>Introduction: {{ Items.summary }}</p>
         </div>
       </div>
+      </div>
 
-
+      <div calss="rightpart">
       <div class="edetail">
         <div class="etime">
-          <h3>Schedule</h3>
+          <h3>HTML</h3>
         </div>
-        <div class="edes2">
-          <p>From {{ Items.eventStartTime }} to {{ Items.eventEndTime }}</p>
-        </div>
+
         <div class="dheader1">
         </div>
 
-        <div class="tprice">
-          <h3>Ticket Type & Price</h3>
-        </div>
-        <div class="edes3">
-          <p>{{ Items.ticketTitle }} : {{ Items.ticketPrice }}</p>
-        </div>
         <div class="dheader2">
         </div>
 
-        <div class="contact">
-          <h3>Contact</h3>
-        </div>
-        <div class="edes4">
-          <p>Description</p>
-        </div>
+      </div>
+      </div>
       </div>
 
       <div class="ticket">
@@ -53,12 +45,25 @@
             <h2>Tickets</h2>
           </div>
         </div>
-        <div class="remain">
-          <h3>Tickets Available:</h3>
+
+        <div class="ticketgroup">
+        <div v-for="t in ticket" :key="t.title" class="tickettype">
+          <div class="remain">
+            <h3>{{t.title}}</h3>
+            <p><br>Stock count: {{t.stockCount}}</p>
+            <p><br>Start selling date: {{t.startSellingDate.substring(0,16)}}</p>
+            <p>End selling date: {{t.endSellingDate.substring(0,16)}}</p>
+          </div>
+          <div class="tprice">
+            <h3>Price: {{t.price}}</h3>
+          </div>
+          <div class="butt">
+            <el-button type="primary" @click="more" plain>Buy Tickets</el-button>
+          </div>
+          <div class="bar">
+          </div>
         </div>
-        <div class="butt">
-          <el-button type="primary" @click="more" plain>Buy Tickets</el-button>
-        </div>
+      </div>
       </div>
 
     </div>
@@ -92,7 +97,8 @@ export default {
         providerId: "",
         ticketTitle:"",
         amount:""
-      }
+      },
+      ticket: []
     }
   },
   mounted() {
@@ -102,7 +108,7 @@ export default {
   },
   methods:{
     getItems() {
-      axios.get('http://52.45.86.178:6001/ticket/api/events/' + "1244940138650423298").then((resp) => {
+      axios.get('http://52.45.86.178:6001/ticket/api/events/' + this.$route.params.eventid).then((resp) => {
         this.Items.title = resp.data.data.event.title;
         this.Items.summary = resp.data.data.event.summary;
         this.Items.htmlContent = resp.data.data.event.htmlContent;
@@ -113,8 +119,7 @@ export default {
         this.Items.tag = resp.data.data.event.tag;
         this.Items.status = resp.data.data.event.status;
         this.Items.tag = resp.data.data.event.tag;
-        // this.Items.ticketTitle = resp.data.ticketList.title;
-        // this.Items.amount = resp.data.ticketList.amount;
+        this.ticket = resp.data.data.ticketList;
         this.loaded = true;
       }).catch((err) => {
         console.log(err);
@@ -127,57 +132,72 @@ export default {
 
 <style scoped>
 .body{
-  text-align: center;
   width: 100%;
   height: 100%;
-  /*padding-top: 30px;*/
   display:flex;
   justify-content:center;
 }
 .eventlist{
   width:100%;
-  height:1100px;
+  height:100%;
   vertical-align: middle;
   background-color: #E9E9E9;
-  text-align: center;
-  /*justify-content:center;*/
-  /*display:flex;*/
+}
+.layout{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .event{
   margin-left: 150px;
-  position: absolute;
-  margin-top: 90px;
   width:630px;
   height:780px;
   background: white;
 }
 .edetail{
-  margin-left: 800px;
-  position: absolute;
-  margin-top: 90px;
+  margin-left: 20px;
   width:650px;
   height:780px;
   background: white;
 }
 .ticket{
   margin-left: 150px;
-  position: absolute;
-  margin-top: 892px;
+  margin-top: 20px;
   width:1300px;
-  height:180px;
+  height:100%;
+  background: white;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tickettype{
+  margin-top: 20px;
+}
+.ticketgroup{
+  margin-top: 50px;
   background: white;
 }
 .butt {
-  /*position: absolute;*/
   vertical-align: middle;
-  margin-left: 1150px;
-  margin-top: 130px;
+  margin-left: 1100px;
+  margin-top: 50px;
   text-align: center;
 }
 .el-button {
   background-color: #AF473C;
   color: white;
   width:100px;
+}
+.tprice{
+  position: absolute;
+  margin-left: 1000px;
+  margin-top: 53px;
+}
+.bar{
+  margin-top: 20px;
+  width:1300px;
+  height:5px;
+  background: #565656;
 }
 .theader{
   position: absolute;
@@ -200,9 +220,9 @@ export default {
   background: #565656;
 }
 .remain{
-  position: absolute;
-  margin-left: 45px;
-  margin-top: 100px;
+  margin-left: 20px;
+  margin-top: 10px;
+  text-align: left;
 }
 .ttitle{
   position:absolute;
@@ -218,9 +238,8 @@ export default {
   background-color: #CDCDCD;
 }
 .etitle{
-  position: absolute;
   margin-left: 150px;
-  margin-top: 10px;
+  margin-top: 40px;
   font-size: 40px;
 }
 .ede{
@@ -233,35 +252,12 @@ export default {
   margin-left: 25px;
   margin-top: 20px;
 }
-.tprice{
-  position: absolute;
-  margin-left: 25px;
-  margin-top: 350px;
-}
-.contact{
-  position: absolute;
-  margin-left: 25px;
-  margin-top: 600px;
-}
+
 .edes1{
   position: absolute;
   margin-left: 45px;
   margin-top: 400px;
-}
-.edes2{
-  position: absolute;
-  margin-left: 45px;
-  margin-top: 70px;
-}
-.edes3{
-  position: absolute;
-  margin-left: 45px;
-  margin-top: 400px;
-}
-.edes4{
-  position: absolute;
-  margin-left: 45px;
-  margin-top: 650px;
+  text-align: left;
 }
 
 .empty{

@@ -11,67 +11,63 @@
   </div>
   <div class="body">
     <div class="eventlist">
-      <div class="event">
+      <div v-for="item in itemList" :key="item" class="event">
         <div class="poster">
         </div>
         <div class="etitle">
-          <h2>Title</h2>
+          <h2>{{ item.title }}</h2>
         </div>
         <div class="edes">
-          <p>Description</p>
+          <p>Type: {{ item.tag }}</p>
+          <p>{{ item.summary }}</p>
+          <p>Venue: {{ item.venue }}</p>
         </div>
         <div class="eprice">
-          <p>Price</p>
+          <p>Start from: {{ item.eventStartTime.substring(0,10)}}</p>
         </div>
 
         <div class="butt">
-          <el-button type="primary" @click="more" plain>More</el-button>
+          <el-button type="primary" @click="more(item.id)" plain>More</el-button>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="interval">
+  </div>
   <div class="empty">
   </div>
 
 </template>
 
 <script>
-// import {ListAllFilm, ListAllPoster, ListHots} from "@/api/film";
+import axios from "axios";
 
 export default {
-    data() {
-      return {
-        id: "",
-        title: "",
-        summary: "",
-        imageUrl: "",
-        htmlContent: "",
-        eventStartTime: "",
-        eventEndTime: "",
-        venue: "",
-        nation: "",
-        tag: "",
-        status: "",
-        createTime: "",
-        providerId: ""
-
-      }
+  data() {
+    return{
+      itemList:[]
+    }
+   },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios.get('http://localhost:8080/ticket/api/events').then(res => {
+        console.log(res.data);
+        this.itemList = res.data.data;
+      });
     },
-    methods: {
-      focus() {
-        this.isFocus = true;
-        this.historySearchList =
-            Store.loadHistory() == null ? [] : Store.loadHistory();
-        this.history = this.historySearchList.length == 0 ? false : true;
-      },
-      blur() {
-        var self = this;
-        this.searchBoxTimeout = setTimeout(function () {
-          self.isFocus = false;
-        }, 300);
-      },
-    },
+    more(id){
+      this.$router.push({
+        name: 'Info',
+        params: {
+          eventid: id
+        }
+      })
+    }
+  }
   };
 </script>
 
@@ -89,35 +85,31 @@ export default {
 
 .search {
   width: 1500px;
-  border-radius: 20px;
   text-align: center;
 }
 .body{
   text-align: center;
   width: 100%;
   height: 100%;
-  /*padding-top: 30px;*/
   display:flex;
   justify-content:center;
 }
 .eventlist{
   width:100%;
-  height:700px;
-  vertical-align: middle;
+  height:100%;
   background-color: #E9E9E9;
   text-align: center;
-  justify-content:center;
   display:flex;
+  flex-direction: column;
+  align-items: center;
 }
 .event{
-  position: absolute;
   margin-top: 10px;
   width:40%;
   height:200px;
   background: white;
 }
 .butt {
-  /*position: absolute;*/
   vertical-align: middle;
   margin-left: 500px;
   margin-top: 155px;
@@ -145,12 +137,17 @@ export default {
   position: absolute;
   margin-left: 220px;
   margin-top: 50px;
+  text-align: left;
 }
 .eprice{
   position: absolute;
   margin-left: 220px;
   margin-top: 160px;
   font-weight: bold;
+}
+.interval{
+  background-color: #E9E9E9;
+  height:10px;
 }
 .empty{
   padding-top: 50px;
