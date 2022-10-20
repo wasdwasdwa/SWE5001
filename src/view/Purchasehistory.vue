@@ -1,26 +1,29 @@
 <template>
   <div class="body">
     <div class="eventlist">
+
+      <div v-for="item in orderList" :key="item">
       <div class="event">
         <div class="poster">
         </div>
         <div class="etitle">
-          <h2>Title</h2>
+          <h2>{{ item.eventId}}</h2>
         </div>
         <div class="edes">
-          <p>Time</p>
-        </div>
-        <div class="edes1">
-          <p>Number</p>
+          <p>Ticket count: {{item.ticketCount}}</p>
+          <p><br>Payment expire time: {{item.payExpireTime.substring(0,16)}}</p>
+          <p>Pay time: {{item.payTime.substring(0,10)}}</p>
         </div>
         <div class="eprice">
-          <p>Price</p>
+          <p>Total price: {{item.totalPrice}}</p>
         </div>
 
         <div class="butt">
-          <el-button type="primary" @click="more" plain>More</el-button>
+          <el-button type="primary" @click="more(item.id)" plain>More</el-button>
         </div>
       </div>
+      </div>
+
     </div>
   </div>
 
@@ -29,8 +32,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Purchasehistory"
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: "Purchasehistory",
+  data() {
+    return{
+      orderList:[]
+    }
+  },
+  mounted(){
+    let token = localStorage.getItem("access_token")
+    axios.get("http://52.45.86.178:6001/order/orders", {
+      headers: {
+        Authorization: token,
+      },
+    }).then(res => {
+      console.log(res.data);
+      this.orderList = res.data.data;
+    });
+  },
+  methods:{
+    more(id){
+      this.$router.push({
+        name: 'Purchasedetail',
+        params: {
+          orderid: id
+        }
+      })
+  },
+}
 }
 </script>
 
@@ -49,21 +81,21 @@ export default {
   vertical-align: middle;
   background-color: #E9E9E9;
   text-align: center;
-  justify-content:center;
   display:flex;
+  flex-direction: column;
+  align-items: center;
 }
 .event{
-  position: absolute;
   margin-top: 10px;
-  width:40%;
+  width:1000px;
   height:200px;
   background: white;
 }
 .butt {
-  /*position: absolute;*/
+  position:absolute;
   vertical-align: middle;
-  margin-left: 500px;
-  margin-top: 155px;
+  margin-left: 880px;
+  margin-top: 160px;
   text-align: center;
 }
 .el-button {
@@ -88,11 +120,7 @@ export default {
   position: absolute;
   margin-left: 220px;
   margin-top: 50px;
-}
-.edes1{
-  position: absolute;
-  margin-left: 220px;
-  margin-top: 80px;
+  text-align: left;
 }
 .eprice{
   position: absolute;

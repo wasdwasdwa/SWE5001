@@ -95,7 +95,7 @@ const routes = [
         }
     },
     {
-        path: '/purchasedetail',
+        path: '/purchasedetail/:orderid',
         name: 'Purchasedetail',
         component: Purchasedetail,
         meta: {

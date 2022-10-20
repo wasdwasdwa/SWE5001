@@ -1,22 +1,19 @@
-// store.js
-import Vue from 'vue';
-import Vuex from 'vuex';
-// Vue.use(Vuex);
+import Vue from 'vue'
+import Vuex from 'vuex'
+// Vue.use(Vuex)
 
-const store = new Vuex.Store({
-
+export default new Vuex.Store({
     state: {
-        // 存储token
-        Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
+        access_token: ''
     },
-
     mutations: {
-        // 修改token，并将token存入localStorage
-        changeLogin (state, user) {
-            state.Authorization = user.Authorization;
-            localStorage.setItem('Authorization', user.Authorization);
+        set_token(state, access_token) {
+            state.access_token = access_token
+            sessionStorage.token = access_token
+        },
+        del_token(state) {
+            state.access_token = ''
+            sessionStorage.removeItem('access_token')
         }
     }
-});
-
-export default store;
+})

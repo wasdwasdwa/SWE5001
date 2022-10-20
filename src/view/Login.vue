@@ -33,12 +33,10 @@
 </template>
 
 <script>
-// import { login } from "@/api/login";
-// import { setToken } from "@/request/auth";
-import { mapMutations } from 'vuex';
 import axios from "axios";
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Login",
   data() {
     return {
@@ -80,9 +78,9 @@ export default {
           let userToken;
           userToken = 'Bearer ' + res.data.data.access_token;
           // 将用户token保存到vuex中
-          localStorage.setItem('userName',this.form.username);
+          localStorage.setItem('username',this.form.username);
           localStorage.setItem('access_token',userToken);
-          this.$router.push('/');
+          this.$router.push("/")
           alert('Log in successfully');
         }).catch(error => {
           alert('Wrong username or password');

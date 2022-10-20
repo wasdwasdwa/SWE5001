@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
         store.state.isLogin = true
         store.state.usname = localStorage.getItem("Uname")
 
-        if (to.path == '/login') {
+        if (to.path === '/login') {
             localStorage.removeItem("Flag")
             localStorage.removeItem("Uname")
             alert("Log out!")
