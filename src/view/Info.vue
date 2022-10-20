@@ -58,7 +58,7 @@
             <h3>Price: {{t.price}}</h3>
           </div>
           <div class="butt">
-            <el-button type="primary" @click="more" plain>Buy Tickets</el-button>
+            <el-button type="primary" @click="buy(t.title,t.id,t.price)" plain>Buy Tickets</el-button>
           </div>
           <div class="bar">
           </div>
@@ -124,6 +124,16 @@ export default {
         this.loaded = true;
       }).catch((err) => {
         console.log(err);
+      })
+    },
+    buy(name, id, price){
+      this.$router.push({
+        name: 'Fillorder',
+        params: {
+          ticketname:name,
+          ticketid: id,
+          ticketprice:price
+        }
       })
     },
   }

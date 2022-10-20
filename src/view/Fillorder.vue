@@ -10,9 +10,6 @@
         <div className="ede">
           <h3>Event Details</h3>
         </div>
-        <div className="edes1">
-          <p>Description</p>
-        </div>
       </div>
 
 
@@ -41,19 +38,19 @@
               <el-input v-model="form.email" clearable placeholder="Please enter email"></el-input>
             </el-form-item>
             <el-form-item prop="address">
-              <el-input v-model="form.address" clearable placeholder="Please enter delivery address" show-password></el-input>
+              <el-input v-model="form.address" clearable placeholder="Please enter delivery address"></el-input>
             </el-form-item>
             <el-form-item prop="phone">
-              <el-input v-model="form.phone" clearable placeholder="Please enter phone number" show-password></el-input>
+              <el-input v-model="form.phone" clearable placeholder="Please enter phone number"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div className="totalp">
-          <h3>Total Price:</h3>
+          <h3>Total Price: {{this.$route.params.ticketprice}}</h3>
         </div>
 
         <div class="butt">
-          <el-button type="primary" @click="more" plain>Proceed</el-button>
+          <el-button type="primary" @click="send" plain>Proceed</el-button>
         </div>
 
       </div>
@@ -66,18 +63,26 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Fillorder",
   data() {
     return {
       form: {
+        ticketId:this.$route.params.ticketid,
         quantity: "",
-        email: "",
-        address: "",
+        deliveryEmail: "",
+        deliveryAddress: "",
         phone: "",
       },
       checked: false,
       rules: {
+        quantity: [
+          { required: true, message: "Please enter quantity", trigger: "blur" },
+          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
         email: [
           { required: true, message: "Please enter email", trigger: "blur" },
           // { max: 10, message: "不能大于10个字符", trigger: "blur" },
@@ -86,13 +91,29 @@ export default {
           { required: true, message: "Please enter delivery address", trigger: "blur" },
           // { max: 10, message: "不能大于10个字符", trigger: "blur" },
         ],
+        phone: [
+          { required: true, message: "Please enter mobile phone", trigger: "blur" },
+          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
       },
     };
   },
   methods: {
-    send(form) {
-      this.$refs[form].validate((valid) => {
-
+    send() {
+      let token = localStorage.getItem("access_token")
+      axios({
+        method: 'post',
+        url: 'http://52.45.86.178:6001/ticket/purchase',
+        headers: {
+          Authorization: token,
+        },
+        data: this.form
+      }).then(res => {
+        console.log(res.data);
+        this.$router.push("/")
+      }).catch(error => {
+        alert('error');
+        console.log(error);
       });
     },
   },

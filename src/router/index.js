@@ -105,7 +105,7 @@ const routes = [
         }
     },
     {
-        path: '/fillorder',
+        path: '/fillorder/:ticketname/:ticketid/:ticketprice',
         name: 'Fillorder',
         component: Fillorder,
         meta: {

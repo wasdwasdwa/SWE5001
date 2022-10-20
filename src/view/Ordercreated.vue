@@ -94,7 +94,6 @@ export default {
   background-color: #E9E9E9;
   text-align: center;
   justify-content:center;
-  /*align-items: center;*/
   display:flex;
 }
 .detail{
@@ -103,6 +102,7 @@ export default {
   width:60%;
   height:360px;
   background: white;
+  text-align: left;
 }
 .payment{
   position: absolute;
@@ -128,9 +128,11 @@ export default {
   margin-left: 10px;
 }
 .orderdetail{
+  margin-left: 200px;
   margin-top: 50px;
 }
 .orderdetail2{
+  margin-left: 200px;
   margin-top: 10px;
 }
 .payment{
