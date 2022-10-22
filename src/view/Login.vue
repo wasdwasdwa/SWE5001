@@ -28,6 +28,9 @@
       <div class="forgot">
         <el-link href="/register" class="forgot" :underline="false">No account? Register</el-link>
       </div>
+      <div class="forgot">
+        <el-link href="/" class="forgot" :underline="false">Back to home</el-link>
+      </div>
     </div>
   </div>
 </template>
@@ -67,7 +70,7 @@ export default {
         newFormData.append('password', this.form.password)
         axios({
           method: 'post',
-          url: 'http://52.45.86.178:6001/auth/login',
+          url: '/prod-api/auth/login',
           auth: {
             username: 'livecat-admin',
             password: 'leopanda',

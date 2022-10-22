@@ -6,7 +6,7 @@
           <h2>Error occurred when processing with the order.</h2>
         </div>
         <div class="orderdetail">
-          <p>Error:</p>
+          <p>Purchase failed, tickets sold out</p>
         </div>
 
       </div>
@@ -14,7 +14,7 @@
     <div class="payment">
     </div>
     <div class="butt">
-      <el-button type="primary" @click="confirm" plain>Retry</el-button>
+      <el-button type="primary" @click="retry" plain>Retry</el-button>
     </div>
   </div>
   <div class="empty">
@@ -23,7 +23,13 @@
 
 <script>
 export default {
-  name: "Orderfail"
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: "Orderfail",
+  method:{
+    retry(){
+      this.$router.push('/info/' + this.$route.params.eventid)
+    }
+  }
 }
 </script>
 

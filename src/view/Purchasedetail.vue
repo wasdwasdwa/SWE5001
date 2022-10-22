@@ -2,7 +2,7 @@
   <div class="body">
     <div class="eventlist">
       <div class="etitle">
-        <h2>{{ Detail.eventId }}</h2>
+        <h2>{{ Detail.eventTitle }}</h2>
       </div>
       <div class="event">
         <div class="poster">
@@ -21,11 +21,12 @@
           <h3>Purchase Detail</h3>
         </div>
         <div class="edes2">
+          <p>Ticket type: {{ Detail.ticketType }}</p>
           <p>Ticket count: {{ Detail.ticketCount }}</p>
           <p><br>Payment ID: {{ Detail.paymentId }}<br>
             Create time: {{Detail.createTime.substring(0,16)}}</p>
-          <p><br>Payment expire time: {{ Detail.payExpireTime.substring(0,16)}}<br>
-            Pay time: {{Detail.payTime.substring(0,16)}}<br>Payment link: {{Detail.paymentLink}}
+          <p><br>Payment expire time: {{ Detail.payExpireTime}}<br>
+            Pay time: {{Detail.payTime}}<br>Payment link: {{Detail.paymentLink}}
           </p>
           <h3><br>Total price: {{ Detail.totalPrice }}</h3>
         </div>
@@ -60,8 +61,10 @@ export default {
       Detail:{
         id: "",
         ticketId: "",
+        ticketType:"",
         ticketCount: "",
         eventId: "", //need event title
+        eventTitle: "",
         customerId: "",
         totalPrice: "",
         status: "",
@@ -78,14 +81,18 @@ export default {
   },
   mounted() {
     let token = localStorage.getItem("access_token")
-    axios.get("http://52.45.86.178:6001/order/orders/"+ this.$route.params.orderid, {
+    // http://52.45.86.178:6001/order/orders/
+    //     /prod-api/order/orders/
+    axios.get("/prod-api/order/orders/"+ this.$route.params.orderid, {
       headers: {
         Authorization: token,
       },
     }).then((resp) => {
       this.Detail.ticketId = resp.data.data.ticketId;
+      this.Detail.ticketType = resp.data.data.ticketType;
       this.Detail.ticketCount = resp.data.data.ticketCount;
       this.Detail.eventId = resp.data.data.eventId;
+      this.Detail.eventTitle = resp.data.data.eventTitle;
       this.Detail.totalPrice = resp.data.data.totalPrice;
       this.Detail.createTime = resp.data.data.createTime;
       this.Detail.payExpireTime = resp.data.data.payExpireTime;

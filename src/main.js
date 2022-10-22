@@ -10,7 +10,7 @@ createApp(App).use(router).use(ElementPlus).mount('#app')
 
 App.config.globalProperties = axios
 
-axios.defaults.baseURL = '/api'
+// axios.defaults.baseURL = '/api'
 
 router.beforeEach((to, from, next) => {
     let getFlag = localStorage.getItem("Flag");

@@ -32,6 +32,9 @@
       <div class="forgot">
         <el-link href="/login" class="forgot" :underline="false">Already registered? Login</el-link>
       </div>
+      <div class="forgot">
+        <el-link href="/" class="forgot" :underline="false">Back to home</el-link>
+      </div>
     </div>
   </div>
 </template>
@@ -87,7 +90,8 @@ export default {
       } else {
         axios({
           method: 'post',
-          url: 'http://52.45.86.178:6001/system/api/user/register',
+          // http://52.45.86.178:6001/system/api/user/register
+          url: '/prod-api/system/api/user/register',
           auth: {
             username: 'livecat-admin',
             password: 'leopanda',

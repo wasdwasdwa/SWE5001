@@ -7,12 +7,12 @@
         <div class="poster">
         </div>
         <div class="etitle">
-          <h2>{{ item.eventId}}</h2>
+          <h2>{{ item.eventTitle}}</h2>
         </div>
         <div class="edes">
           <p>Ticket count: {{item.ticketCount}}</p>
-          <p><br>Payment expire time: {{item.payExpireTime.substring(0,16)}}</p>
-          <p>Pay time: {{item.payTime.substring(0,10)}}</p>
+          <p><br>Payment expire time: {{item.payExpireTime}}</p>
+          <p>Pay time: {{item.payTime}}</p>
         </div>
         <div class="eprice">
           <p>Total price: {{item.totalPrice}}</p>
@@ -27,6 +27,8 @@
     </div>
   </div>
 
+  <div class="interval">
+  </div>
   <div class="empty">
   </div>
 </template>
@@ -44,7 +46,9 @@ export default {
   },
   mounted(){
     let token = localStorage.getItem("access_token")
-    axios.get("http://52.45.86.178:6001/order/orders", {
+    // http://52.45.86.178:6001/order/orders
+    //     /prod-api/order/orders
+    axios.get("/prod-api/order/orders", {
       headers: {
         Authorization: token,
       },
@@ -77,7 +81,7 @@ export default {
 }
 .eventlist{
   width:100%;
-  height:700px;
+  height:100%px;
   vertical-align: middle;
   background-color: #E9E9E9;
   text-align: center;
@@ -127,6 +131,10 @@ export default {
   margin-left: 220px;
   margin-top: 160px;
   font-weight: bold;
+}
+.interval{
+  background-color: #E9E9E9;
+  height:10px;
 }
 .empty{
   padding-top: 50px;

@@ -2,7 +2,7 @@
   <div className="body">
     <div className="eventlist">
       <div className="etitle">
-        <h2>Title</h2>
+        <h2>{{ this.$route.params.ticketname }}</h2>
       </div>
       <div className="event">
         <div className="poster">
@@ -98,19 +98,48 @@ export default {
       },
     };
   },
+  mounted(){
+    if (localStorage.getItem("access_token") == null) {
+      alert('Please login first')
+      this.$router.push('/login')
+    }
+  },
   methods: {
     send() {
       let token = localStorage.getItem("access_token")
       axios({
         method: 'post',
-        url: 'http://52.45.86.178:6001/ticket/purchase',
+      // /prod-api/ticket/purchase
+        // url: 'http://52.45.86.178:6001/ticket/purchase',
+        url: '/prod-api/ticket/purchase',
         headers: {
           Authorization: token,
         },
         data: this.form
       }).then(res => {
-        console.log(res.data);
-        this.$router.push("/")
+        const payId = res.data.data.paymentId;
+        const orderId = res.data.data.id;
+        if (res.data.code === 20000) {
+          const orderInfo = res.data.data;
+          localStorage.setItem('orderInfo',JSON.stringify(orderInfo));
+          console.log(res.data);
+          this.$router.push({
+            name: 'Ordercreated',
+            params: {
+              paymentid: payId,
+            }
+          })
+        }
+        if (res.data.code === 602){
+          this.$router.push({
+            name: 'Orderfail',
+            params: {
+              eventid: this.$route.params.eventid,
+              orderid:orderId
+            }
+          })
+        }
+
       }).catch(error => {
         alert('error');
         console.log(error);

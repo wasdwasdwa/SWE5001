@@ -54,7 +54,9 @@ export default {
   },
   methods: {
     getData() {
-      axios.get('/ticket/api/events').then(res => {
+      // /prod-api/ticket/api/events
+      // http://52.45.86.178:6001/ticket/api/events
+      axios.get('/prod-api/ticket/api/events').then(res => {
         console.log(res.data);
         this.itemList = res.data.data;
       });

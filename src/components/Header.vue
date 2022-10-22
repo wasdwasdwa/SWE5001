@@ -65,6 +65,9 @@ export default {
   methods: {
     handleLogout() {
       localStorage.removeItem("access_token")
+      localStorage.removeItem("username")
+      localStorage.removeItem("userName")
+      localStorage.removeItem("orderInfo")
       this.$router.push('/login')
     },
     showOrderList(){

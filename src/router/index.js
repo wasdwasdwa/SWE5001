@@ -55,7 +55,7 @@ const routes = [
     },
 
     {
-        path: '/ordercreated',
+        path: '/ordercreated/:paymentid',
         name: 'Ordercreated',
         component: Ordercreated,
         meta: {
@@ -65,7 +65,7 @@ const routes = [
         }
     },
     {
-        path: '/paysuccess',
+        path: '/paysuccess/:paymentid',
         name: 'Paysuccess',
         component: Paysuccess,
         meta: {
@@ -75,7 +75,7 @@ const routes = [
         }
     },
     {
-        path: '/orderfail',
+        path: '/orderfail/:eventid/:orderid',
         name: 'Orderfail',
         component: Orderfail,
         meta: {
@@ -105,7 +105,7 @@ const routes = [
         }
     },
     {
-        path: '/fillorder/:ticketname/:ticketid/:ticketprice',
+        path: '/fillorder/:eventid/:ticketname/:ticketid/:ticketprice',
         name: 'Fillorder',
         component: Fillorder,
         meta: {

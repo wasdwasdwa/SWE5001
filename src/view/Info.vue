@@ -109,7 +109,9 @@ export default {
   },
   methods:{
     getItems() {
-      axios.get('http://52.45.86.178:6001/ticket/api/events/' + this.$route.params.eventid).then((resp) => {
+      // /prod-api/ticket/api/events/
+      // http://52.45.86.178:6001/ticket/api/events/
+      axios.get('/prod-api/ticket/api/events/' + this.$route.params.eventid).then((resp) => {
         this.Items.title = resp.data.data.event.title;
         this.Items.summary = resp.data.data.event.summary;
         this.Items.htmlContent = resp.data.data.event.htmlContent;
@@ -130,6 +132,7 @@ export default {
       this.$router.push({
         name: 'Fillorder',
         params: {
+          eventid: this.$route.params.eventid,
           ticketname:name,
           ticketid: id,
           ticketprice:price

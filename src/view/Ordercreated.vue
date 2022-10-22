@@ -3,28 +3,40 @@
     <div class="order">
       <div class="detail">
         <div class="text">
-          <h2>Order (id) has been successfully created!</h2>
+          <h2>Order {{ Item.id }} has been successfully created!</h2>
         </div>
         <div class="orderdetail">
-          <p>Activity name:</p>
+          <p>Event id: {{Item.eventId}}</p>
         </div>
         <div class="orderdetail2">
-          <p>Purchaser name:</p>
+          <p>Ticket id: {{Item.ticketId}}</p>
         </div>
         <div class="orderdetail2">
-          <p>Purchaser email:</p>
+          <p>Ticket count: {{Item.ticketCount}}</p>
         </div>
         <div class="orderdetail2">
-          <p>Purchaser address:</p>
+          <p>Total price: {{Item.totalPrice}}</p>
         </div>
         <div class="orderdetail2">
-          <p>Ticket number:</p>
+          <p>Purchaser email: {{Item.deliveryEmail}}</p>
         </div>
         <div class="orderdetail2">
-          <p>Ticket type:</p>
+          <p>Purchaser address: {{Item.deliveryAddress}}</p>
         </div>
         <div class="orderdetail2">
-          <p>Total price:</p>
+          <p>Payment Id: {{Item.paymentId}}</p>
+        </div>
+        <div class="orderdetail2">
+          <p>Status: {{Item.status}}</p>
+        </div>
+        <div class="orderdetail2">
+          <p>Create time: {{Item.createTime}}</p>
+        </div>
+        <div class="orderdetail2">
+          <p>Pay expire time: {{Item.payExpireTime}}</p>
+        </div>
+        <div class="orderdetail2">
+          <p>Pay time: {{Item.payTime}}</p>
         </div>
       </div>
     </div>
@@ -42,36 +54,52 @@
 import axios from "axios";
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Ordercreated",
 
   data () {
     return {
-      Items:{
+      Item:{
         id: "",
-        title: "",
-        summary: "",
-        imageUrl: "",
-        htmlContent: "",
-        eventStartTime: "",
-        eventEndTime: "",
-        venue: "",
-        nation: "",
-        tag: "",
-        status: "",
-        createTime: "",
-        providerId: ""
+        eventId:"",
+        ticketId:"",
+        ticketCount:"",
+        totalPrice:"",
+        deliveryEmail:'',
+        deliveryAddress:'',
+        paymentId:'',
+        status:'',
+        createTime:'',
+        payExpireTime: '',
+        payTime: '',
       }
     }
   },
   mounted() {
-    if (!this.loaded) {
-      this.getItems();
+    if (localStorage.getItem("orderInfo") != null){
+      const order = JSON.parse(localStorage.getItem('orderInfo'));
+      this.Item.id = order.id;
+      this.Item.eventId = order.eventId;
+      this.Item.ticketId = order.ticketId;
+      this.Item.ticketCount = order.ticketCount;
+      this.Item.totalPrice = order.totalPrice;
+      this.Item.deliveryEmail = order.deliveryEmail;
+      this.Item.deliveryAddress = order.deliveryAddress;
+      this.Item.paymentId = order.paymentId;
+      this.Item.status = order.status;
+      this.Item.createTime = order.createTime;
+      this.Item.payExpireTime = order.payExpireTime;
+      this.Item.payTime = order.payTime;
     }
   },
   methods: {
-
     confirm () {
-      this.$router.push('/paysuccess')
+      this.$router.push({
+        name: 'Paysuccess',
+        params: {
+          paymentid: this.Item.paymentId
+        }
+      })
     }
   }
 
@@ -89,7 +117,7 @@ export default {
 }
 .order{
   width:100%;
-  height:630px;
+  height:750px;
   vertical-align: middle;
   background-color: #E9E9E9;
   text-align: center;
@@ -100,14 +128,14 @@ export default {
   margin-top: 20px;
   position: absolute;
   width:60%;
-  height:360px;
+  height:500px;
   background: white;
   text-align: left;
 }
 .payment{
   position: absolute;
   vertical-align: middle;
-  margin-top: 400px;
+  margin-top: 530px;
   width:60%;
   height:150px;
   background: white;
@@ -115,7 +143,7 @@ export default {
 .butt {
   position: absolute;
   vertical-align: middle;
-  margin-top: 570px;
+  margin-top: 690px;
   text-align: center;
 }
 .el-button {
