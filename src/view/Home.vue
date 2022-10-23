@@ -13,17 +13,17 @@
     <div class="eventlist">
       <div v-for="item in itemList" :key="item" class="event">
         <div class="poster">
+          <img :src="item.imageUrl" class="pic" >
         </div>
         <div class="etitle">
           <h2>{{ item.title }}</h2>
         </div>
         <div class="edes">
           <p>Type: {{ item.tag }}</p>
-          <p>{{ item.summary }}</p>
           <p>Venue: {{ item.venue }}</p>
         </div>
         <div class="eprice">
-          <p>Start from: {{ item.eventStartTime.substring(0,10)}}</p>
+          <p>Start from: {{ item.eventStartTime}}</p>
         </div>
 
         <div class="butt">
@@ -107,13 +107,13 @@ export default {
 }
 .event{
   margin-top: 10px;
-  width:40%;
+  width:60%;
   height:200px;
   background: white;
 }
 .butt {
   vertical-align: middle;
-  margin-left: 500px;
+  margin-left: 800px;
   margin-top: 155px;
   text-align: center;
 }
@@ -129,6 +129,12 @@ export default {
   width: 180px;
   height:180px;
   background-color: #CDCDCD;
+  overflow: hidden;
+  text-align: center;
+}
+.pic{
+  max-height:100%;
+  object-fit: contain;
 }
 .etitle{
   position: absolute;
@@ -144,7 +150,7 @@ export default {
 .eprice{
   position: absolute;
   margin-left: 220px;
-  margin-top: 160px;
+  margin-top: 170px;
   font-weight: bold;
 }
 .interval{

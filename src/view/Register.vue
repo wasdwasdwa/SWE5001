@@ -90,6 +90,7 @@ export default {
       } else {
         axios({
           method: 'post',
+        // /prod-api/system/api/user/register
           // http://52.45.86.178:6001/system/api/user/register
           url: '/prod-api/system/api/user/register',
           auth: {

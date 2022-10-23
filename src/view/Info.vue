@@ -10,15 +10,17 @@
         <div class="leftpart">
       <div class="event">
         <div class="poster">
+          <img :src="Items.imageUrl" class="pic" >
         </div>
         <div class="ede">
           <h3>Event Details</h3>
         </div>
         <div class="edes1">
           <p>Type: {{ Items.tag }}</p>
-          <p>Event place: {{ Items.venue }} , {{ Items.nation }}</p>
+          <p><br>Event place: {{ Items.venue }} , {{ Items.nation }}</p>
           <p>From {{ Items.eventStartTime.substring(0,16) }} to {{ Items.eventEndTime.substring(0,16) }}</p>
-          <p>Introduction: {{ Items.summary }}</p>
+        </div>
+        <div class="dheader1">
         </div>
       </div>
       </div>
@@ -26,12 +28,9 @@
       <div calss="rightpart">
       <div class="edetail">
         <div class="etime">
-          <h3>HTML</h3>
+          <h3>Introduction</h3>
+          <p class="summary"><br>{{ Items.summary }}</p>
         </div>
-
-        <div class="dheader1">
-        </div>
-
         <div class="dheader2">
         </div>
 
@@ -121,6 +120,7 @@ export default {
         this.Items.nation = resp.data.data.event.nation;
         this.Items.tag = resp.data.data.event.tag;
         this.Items.status = resp.data.data.event.status;
+        this.Items.imageUrl = resp.data.data.event.imageUrl;
         this.Items.tag = resp.data.data.event.tag;
         this.ticket = resp.data.data.ticketList;
         this.loaded = true;
@@ -165,13 +165,13 @@ export default {
 .event{
   margin-left: 150px;
   width:630px;
-  height:780px;
+  height:580px;
   background: white;
 }
 .edetail{
   margin-left: 20px;
   width:650px;
-  height:780px;
+  height:580px;
   background: white;
 }
 .ticket{
@@ -221,8 +221,8 @@ export default {
 }
 .dheader1{
   position: absolute;
-  margin-top: 330px;
-  width:650px;
+  margin-top: 580px;
+  width:630px;
   height:5px;
   background: #565656;
 }
@@ -232,6 +232,12 @@ export default {
   width:650px;
   height:5px;
   background: #565656;
+}
+.summary{
+  margin-left: 25px;
+  width:550px;
+  text-align: justify;
+  line-height: 25px;
 }
 .remain{
   margin-left: 20px;
@@ -246,14 +252,20 @@ export default {
   color: white;
 }
 .poster{
+  text-align: center;
   position: absolute;
   width: 630px;
   height:330px;
   background-color: #CDCDCD;
+  overflow: hidden;
+}
+.pic{
+  max-height:100%;
+  object-fit: contain;
 }
 .etitle{
   margin-left: 150px;
-  margin-top: 40px;
+  margin-top: 20px;
   font-size: 40px;
 }
 .ede{
@@ -273,7 +285,9 @@ export default {
   margin-top: 400px;
   text-align: left;
 }
-
+.layout{
+  margin-top: 20px;
+}
 .empty{
   padding-top: 50px;
 }
