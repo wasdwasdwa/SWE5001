@@ -70,6 +70,8 @@ export default {
         newFormData.append('password', this.form.password)
         axios({
           method: 'post',
+          // http://52.45.86.178:6001/
+        // /prod-api/auth/login
           url: '/prod-api/auth/login',
           auth: {
             username: 'livecat-admin',

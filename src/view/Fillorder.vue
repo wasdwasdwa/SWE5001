@@ -6,9 +6,13 @@
       </div>
       <div className="event">
         <div className="poster">
+          <img :src="Img.imageUrl" class="pic" >
         </div>
         <div className="ede">
           <h3>Event Details</h3>
+        </div>
+        <div class="su">
+          <p>{{ Img.summary }}</p>
         </div>
       </div>
 
@@ -35,10 +39,10 @@
               <el-input v-model="form.quantity" clearable placeholder="Please enter quantity"></el-input>
             </el-form-item>
             <el-form-item prop="email">
-              <el-input v-model="form.email" clearable placeholder="Please enter email"></el-input>
+              <el-input v-model="form.deliveryEmail" clearable placeholder="Please enter email"></el-input>
             </el-form-item>
             <el-form-item prop="address">
-              <el-input v-model="form.address" clearable placeholder="Please enter delivery address"></el-input>
+              <el-input v-model="form.deliveryAddress" clearable placeholder="Please enter delivery address"></el-input>
             </el-form-item>
             <el-form-item prop="phone">
               <el-input v-model="form.phone" clearable placeholder="Please enter phone number"></el-input>
@@ -46,7 +50,7 @@
           </el-form>
         </div>
         <div className="totalp">
-          <h3>Total Price: {{this.$route.params.ticketprice}}</h3>
+          <h3>Total Price: {{this.$route.params.ticketprice }} x {{this.form.quantity}}</h3>
         </div>
 
         <div class="butt">
@@ -77,6 +81,10 @@ export default {
         deliveryAddress: "",
         phone: "",
       },
+      Img:{
+        imageUrl:'',
+        summary:'',
+      },
       checked: false,
       rules: {
         quantity: [
@@ -103,6 +111,14 @@ export default {
       alert('Please login first')
       this.$router.push('/login')
     }
+    // /prod-api
+    // http://52.45.86.178:6001
+    axios.get("/prod-api/ticket/api/events/" + this.$route.params.eventid).then((res) => {
+      this.Img.imageUrl = res.data.data.event.imageUrl;
+      this.Img.summary = res.data.data.event.summary;
+    }).catch((err) => {
+      console.log(err);
+    })
   },
   methods: {
     send() {
@@ -158,7 +174,18 @@ export default {
   display: flex;
   justify-content: center;
 }
-
+.su{
+  position: absolute;
+  text-align: justify;
+  margin-left: 45px;
+  margin-top: 400px;
+  width: 540px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:5;
+}
 .eventlist {
   width: 100%;
   height: 670px;
@@ -200,6 +227,11 @@ export default {
   width: 630px;
   height: 330px;
   background-color: #CDCDCD;
+  overflow: hidden;
+}
+.pic{
+  max-height:100%;
+  object-fit: contain;
 }
 
 .etitle {

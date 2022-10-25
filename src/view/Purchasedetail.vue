@@ -6,12 +6,13 @@
       </div>
       <div class="event">
         <div class="poster">
+          <img :src="Img.imageUrl" class="pic" >
         </div>
         <div class="ede">
           <h3>Event Details</h3>
         </div>
         <div class="edes1">
-          <p>Description</p>
+          <p>{{ Img.summary }}</p>
         </div>
       </div>
 
@@ -75,15 +76,19 @@ export default {
         paymentId: "",
         deliveryEmail: "",
         deliveryAddress: "",
-        phone: ""
+        phone: "",
+      },
+      Img:{
+        imageUrl:"",
+        summary:''
       }
     }
   },
-  mounted() {
+  async mounted() {
     let token = localStorage.getItem("access_token")
     // http://52.45.86.178:6001/order/orders/
     //     /prod-api/order/orders/
-    axios.get("/prod-api/order/orders/"+ this.$route.params.orderid, {
+    await axios.get("/prod-api/order/orders/"+ this.$route.params.orderid, {
       headers: {
         Authorization: token,
       },
@@ -104,6 +109,12 @@ export default {
       this.Detail.phone = resp.data.data.phone;
 
       this.loaded = true;
+    }).catch((err) => {
+      console.log(err);
+    })
+    await axios.get("/prod-api/ticket/api/events/" + this.Detail.eventId).then((res) => {
+      this.Img.imageUrl = res.data.data.event.imageUrl;
+      this.Img.summary = res.data.data.event.summary;
     }).catch((err) => {
       console.log(err);
     })
@@ -159,6 +170,11 @@ export default {
   width: 630px;
   height:330px;
   background-color: #CDCDCD;
+  overflow: hidden;
+}
+.pic{
+  max-height:100%;
+  object-fit: contain;
 }
 .etitle{
   position: absolute;
@@ -183,8 +199,15 @@ export default {
 }
 .edes1{
   position: absolute;
+  text-align: justify;
   margin-left: 45px;
   margin-top: 400px;
+  width: 540px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:5;
 }
 .edes2{
   position: absolute;

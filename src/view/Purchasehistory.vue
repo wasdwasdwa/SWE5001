@@ -5,6 +5,7 @@
       <div v-for="item in orderList" :key="item">
       <div class="event">
         <div class="poster">
+          <img :src="item.imageUrl" class="pic" >
         </div>
         <div class="etitle">
           <h2>{{ item.eventTitle}}</h2>
@@ -41,14 +42,14 @@ export default {
   name: "Purchasehistory",
   data() {
     return{
-      orderList:[]
+      orderList:[],
     }
   },
-  mounted(){
+  async mounted(){
     let token = localStorage.getItem("access_token")
     // http://52.45.86.178:6001/order/orders
     //     /prod-api/order/orders
-    axios.get("/prod-api/order/orders", {
+    await axios.get("/prod-api/order/orders", {
       headers: {
         Authorization: token,
       },
@@ -56,6 +57,14 @@ export default {
       console.log(res.data);
       this.orderList = res.data.data;
     });
+
+    for (let i=0; i<this.orderList.length; i++){
+      await axios.get("/prod-api/ticket/api/events/" + this.orderList[i].eventId).then(res => {
+        console.log(res.data);
+        this.orderList[i].imageUrl = res.data.data.event.imageUrl;
+      });
+    }
+
   },
   methods:{
     more(id){
@@ -114,6 +123,11 @@ export default {
   width: 180px;
   height:180px;
   background-color: #CDCDCD;
+  overflow: hidden;
+}
+.pic{
+  max-height:100%;
+  object-fit: contain;
 }
 .etitle{
   position: absolute;

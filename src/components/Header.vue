@@ -9,7 +9,7 @@
         <el-link href="/" class="header-link" :underline="false">Events</el-link>
       </div>
 
-      <el-link v-if="!isLogin" href="/login" style="float: right;padding-top: 23px;padding-right: 50px"
+      <el-link v-if="!isLogin" @click="customerLog" style="float: right;padding-top: 23px;padding-right: 50px"
                class="header-link" :underline="false">
         Login/Register
       </el-link>
@@ -23,7 +23,7 @@
         <template v-slot:dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>
-            <el-link @click="showOrderList" :underline="false" href="/purchasehistory" style="padding-right: 7px">
+            <el-link @click="showOrderList" :underline="false" style="padding-right: 7px">
               <i style="font-size: 15px; padding-right: 3px" class="el-icon-s-order"></i>My orders
             </el-link>
           </el-dropdown-item>
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+
+import router from "@/router";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -71,7 +73,10 @@ export default {
       this.$router.push('/login')
     },
     showOrderList(){
-
+      this.$router.push('/purchasehistory')
+    },
+    customerLog(){
+      this.$router.push('/login')
     }
   },
 
