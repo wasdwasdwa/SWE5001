@@ -38,10 +38,10 @@
             <el-form-item prop="quantity">
               <el-input v-model="form.quantity" clearable placeholder="Please enter quantity"></el-input>
             </el-form-item>
-            <el-form-item prop="email">
+            <el-form-item prop="deliveryEmail">
               <el-input v-model="form.deliveryEmail" clearable placeholder="Please enter email"></el-input>
             </el-form-item>
-            <el-form-item prop="address">
+            <el-form-item prop="deliveryAddress">
               <el-input v-model="form.deliveryAddress" clearable placeholder="Please enter delivery address"></el-input>
             </el-form-item>
             <el-form-item prop="phone">
@@ -89,15 +89,12 @@ export default {
       rules: {
         quantity: [
           { required: true, message: "Please enter quantity", trigger: "blur" },
-          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
         ],
-        email: [
+        deliveryEmail: [
           { required: true, message: "Please enter email", trigger: "blur" },
-          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
         ],
-        address: [
+        deliveryAddress: [
           { required: true, message: "Please enter delivery address", trigger: "blur" },
-          // { max: 10, message: "不能大于10个字符", trigger: "blur" },
         ],
         phone: [
           { required: true, message: "Please enter mobile phone", trigger: "blur" },
